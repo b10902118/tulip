@@ -80,10 +80,10 @@ function hex_highlight(hex:string): React.ReactNode {
     result.push(line[0]);
     for (let j = 0; j < hexString.length; j++) {
       if(j%4==0&&j!=0) result.push(' ');
-      result.push('   ' + line[line.length - 1]+'\n'); 
+      result.push(applyColor(hexString[j]));
     }
     // pad
-    result.push(' '.repeat(3*(16-hexString.length)));
+    result.push(' '.repeat(3*(16-hexString.length)+(3-Math.floor((hexString.length-1)/4))));
 
     result.push('   ' + line[line.length - 1]+'\n'); 
   }
