@@ -59,7 +59,7 @@ function FlowContainer({
 
 function hex_highlight(hex:string): React.ReactNode {
   const result: React.ReactNode[] = [];
-  const lines = hex.split("\n");
+  const lines = hex.split("\n").filter((x) => x !== '');
   
   var key = 0;
 
