@@ -57,9 +57,31 @@ function FlowContainer({
   );
 }
 
+function hex_highlight(hex:string) {
+  var result = "";
+  const lines = hex.split("\n");
+  
+  const applyColor = (hex_code:string) => {
+    const val = parseInt(hex_code, 16);
+    if (val>0x20 || val<0x7f) return ' ' + hex_code;
+    else if(val <=0x20) return ' '+`<span class="text-red-600">${hex_code}</span>`;
+    else return ' '+`<span class="bg-blue-500">${hex_code}</span>`;
+  };
+  
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i].split(' ').filter((x) => x !== '');
+    const hexString = line.slice(1,-1);
+    result += line[0];
+    for (let j = 0; j < hexString.length; j++) {
+      result+= applyColor(hexString[j]);
+    }
+    result += ' ' +line[-1];
+  }
+}
+
 function HexFlow({ flow }: { flow: FlowData }) {
   const hex = hexy(atob(flow.b64), { format: "twos" });
-  return <FlowContainer copyText={hex}>{hex}</FlowContainer>;
+  return <FlowContainer copyText={hex}>{hex_highlight(hex)}</FlowContainer>;
 }
 
 function TextFlow({ flow }: { flow: FlowData }) {
