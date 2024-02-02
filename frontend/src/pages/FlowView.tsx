@@ -67,8 +67,8 @@ function hex_highlight(hex:string): React.ReactNode {
     const val = parseInt(hex_code, 16);
     hex_code = ' '+hex_code;
     if (val>0x20 && val<0x7f) return hex_code;
-    // space ct lf null
-    else if(val==0x20||val==0x0a||val==0x0d||val==0x00) return <span key={++key} className="text-red-600">{hex_code}</span>;
+    // space tab cr lf null
+    else if(val==0x20||val == 0x09||val==0x0a||val==0x0d||val==0x00) return <span key={++key} className="text-red-600">{hex_code}</span>;
     else return <span key={++key} className="text-blue-500">{hex_code}</span>;
   };
   
@@ -153,6 +153,12 @@ function detectType(flow: FlowData) {
   const firstLine = flow.data.split("\n")[0];
   if (firstLine.includes("HTTP")) {
     return "Plain";
+  }
+
+  const nonPrintableRegex = /[^\x20-\x7E\x09\x0a\x0d]/; // Matches any character outside the printable ASCII range
+
+  if (nonPrintableRegex.test(flow.data)) {
+    return "Hex";
   }
 
   return "Plain";
