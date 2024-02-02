@@ -66,8 +66,10 @@ function hex_highlight(hex:string): React.ReactNode {
   const applyColor = (hex_code:string): React.ReactNode => {
     const val = parseInt(hex_code, 16);
     key++;
+    hex_code = ' '+hex_code;
     if (val>0x20 && val<0x7f) return <React.Fragment key={key}>{hex_code}</React.Fragment>;
-    else if(val <=0x20) return <span key={key} className="text-red-600">{hex_code}</span>;
+    // space ct lf null
+    else if(val==0x20||val==0x0a||val==0x0d||val==0x00) return <span key={key} className="text-red-600">{hex_code}</span>;
     else return <span key={key} className="text-blue-500">{hex_code}</span>;
   };
   
@@ -80,7 +82,7 @@ function hex_highlight(hex:string): React.ReactNode {
     for (let j = 0; j < hexString.length; j++) {
       result.push(applyColor(hexString[j]));
     }
-    result.push(<React.Fragment key={++key}>{line[line.length - 1]}</React.Fragment>); 
+    result.push(<React.Fragment key={++key}>{line[line.length - 1]+'\n'}</React.Fragment>); 
   }
 
   console.log(result)
