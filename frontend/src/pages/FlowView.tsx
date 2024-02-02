@@ -73,7 +73,8 @@ function hex_highlight(hex:string): React.ReactNode {
   };
   
   for (let i = 0; i < lines.length; i++) {
-    const line = lines[i].substring(0,58).split(' ').filter((x) => x !== '')+lines[i].substring(58);
+    const line = lines[i].substring(0,57).split(' ').filter((x) => x !== '');
+    line.push(lines[i].substring(57));
     console.log(line)
     const hexString = line.slice(1,-1);
     console.log(hexString)
@@ -85,7 +86,7 @@ function hex_highlight(hex:string): React.ReactNode {
     // pad
     result.push(' '.repeat(3*(16-hexString.length)+(3-Math.floor((hexString.length-1)/4))));
 
-    result.push('   ' + line[line.length - 1]+'\n'); 
+    result.push(line[line.length - 1]+'\n'); 
   }
 
   console.log(result)
