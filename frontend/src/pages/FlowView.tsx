@@ -57,27 +57,35 @@ function FlowContainer({
   );
 }
 
-function hex_highlight(hex:string) {
-  var result = "";
+function hex_highlight(hex:string): React.ReactNode {
+  const result: React.ReactNode[] = [];
   const lines = hex.split("\n");
   
-  const applyColor = (hex_code:string) => {
+  var key = 0;
+
+  const applyColor = (hex_code:string): React.ReactNode => {
     const val = parseInt(hex_code, 16);
-    if (val>0x20 || val<0x7f) return ' ' + hex_code;
-    else if(val <=0x20) return ' '+`<span class="text-red-600">${hex_code}</span>`;
-    else return ' '+`<span class="bg-blue-500">${hex_code}</span>`;
+    key++;
+    if (val>0x20 || val<0x7f) return <React.Fragment key={key}>{hex_code}</React.Fragment>;
+    else if(val <=0x20) return <span key={key} className="text-red-600">{hex_code}</span>;
+    else return <span key={key} className="bg-blue-500">{hex_code}</span>;
   };
   
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i].split(' ').filter((x) => x !== '');
     const hexString = line.slice(1,-1);
-    result += line[0];
+    result.push(<React.Fragment key={++key}>{line[0]}</React.Fragment>);
     for (let j = 0; j < hexString.length; j++) {
-      result+= applyColor(hexString[j]);
+      result.push(applyColor(hexString[j]));
     }
-    result += ' ' +line[-1];
+    result.push(<React.Fragment key={++key}>{line[line.length - 1]}</React.Fragment>); 
   }
-  return result;
+
+  return (
+    <React.Fragment>
+      {result}
+    </React.Fragment>
+  );
 }
 
 function HexFlow({ flow }: { flow: FlowData }) {
