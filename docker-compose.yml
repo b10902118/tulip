@@ -15,7 +15,7 @@ services:
     image: tulip-frontend:latest
     restart: unless-stopped
     ports:
-      - "3000:3000"
+      - "140.112.30.186:3000:3000"
     depends_on:
       - mongo
     networks:
@@ -35,6 +35,7 @@ services:
       - internal
     volumes:
       - ${TRAFFIC_DIR_HOST}:${TRAFFIC_DIR_DOCKER}:ro
+      - ./services/api:/app:ro
     environment:
       TULIP_MONGO: mongo:27017
       TULIP_TRAFFIC_DIR: ${TRAFFIC_DIR_DOCKER}

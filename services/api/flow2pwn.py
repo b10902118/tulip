@@ -44,16 +44,16 @@ def flow2pwn(flow):
 import sys
 
 host = sys.argv[1]
-proc = remote(host, {})
+p = remote(host, {})
 """.format(port)
 
     for message in flow['flow']:
         data = base64.b64decode(message["b64"])
         if message['from'] == 'c':
-            script += """proc.write(b"{}")\n""".format(convert(data))
+            script += """p.send(b"{}")\n""".format(convert(data))
 
         else:
-            script += """proc.recvuntil(b"{}")\n""".format(convert(data[-10:]).replace("\n","\\n"))
+            script += """p.recvuntil(b"{}")\n""".format(convert(data[-10:]).replace("\n","\\n"))
 
     return script
 

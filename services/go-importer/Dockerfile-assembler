@@ -1,5 +1,6 @@
 FROM golang:1.18-alpine
 
+
 COPY . /app
 
 WORKDIR /app
@@ -7,4 +8,6 @@ WORKDIR /app
 RUN apk add --no-cache git make build-base libpcap-dev
 
 RUN go mod download
+
+ENV GOMAXPROCS=10
 RUN go build ./cmd/assembler
