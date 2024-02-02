@@ -65,12 +65,11 @@ function hex_highlight(hex:string): React.ReactNode {
 
   const applyColor = (hex_code:string): React.ReactNode => {
     const val = parseInt(hex_code, 16);
-    key++;
     hex_code = ' '+hex_code;
-    if (val>0x20 && val<0x7f) return <React.Fragment key={key}>{hex_code}</React.Fragment>;
+    if (val>0x20 && val<0x7f) return hex_code;
     // space ct lf null
-    else if(val==0x20||val==0x0a||val==0x0d||val==0x00) return <span key={key} className="text-red-600">{hex_code}</span>;
-    else return <span key={key} className="text-blue-500">{hex_code}</span>;
+    else if(val==0x20||val==0x0a||val==0x0d||val==0x00) return <span key={++key} className="text-red-600">{hex_code}</span>;
+    else return <span key={++key} className="text-blue-500">{hex_code}</span>;
   };
   
   for (let i = 0; i < lines.length; i++) {
@@ -78,11 +77,15 @@ function hex_highlight(hex:string): React.ReactNode {
     console.log(line)
     const hexString = line.slice(1,-1);
     console.log(hexString)
-    result.push(<React.Fragment key={++key}>{line[0]}</React.Fragment>);
+    result.push(line[0]);
     for (let j = 0; j < hexString.length; j++) {
-      result.push(applyColor(hexString[j]));
+      if(j%4==0&&j!=0) result.push(' ');
+      result.push('   ' + line[line.length - 1]+'\n'); 
     }
-    result.push(<React.Fragment key={++key}>{line[line.length - 1]+'\n'}</React.Fragment>); 
+    // pad
+    result.push(' '.repeat(3*(16-hexString.length)));
+
+    result.push('   ' + line[line.length - 1]+'\n'); 
   }
 
   console.log(result)
