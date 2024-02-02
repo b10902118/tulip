@@ -73,7 +73,9 @@ function hex_highlight(hex:string): React.ReactNode {
   
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i].split(' ').filter((x) => x !== '');
+    console.log(line)
     const hexString = line.slice(1,-1);
+    console.log(hexString)
     result.push(<React.Fragment key={++key}>{line[0]}</React.Fragment>);
     for (let j = 0; j < hexString.length; j++) {
       result.push(applyColor(hexString[j]));
@@ -81,6 +83,7 @@ function hex_highlight(hex:string): React.ReactNode {
     result.push(<React.Fragment key={++key}>{line[line.length - 1]}</React.Fragment>); 
   }
 
+  console.log(result)
   return (
     <React.Fragment>
       {result}
