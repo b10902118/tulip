@@ -58,7 +58,7 @@ function FlowContainer({
 }
 
 function HexFlow({ flow }: { flow: FlowData }) {
-  const hex = hexy(atob(flow.b64)); //, { format: "twos" });
+  const hex = hexy(atob(flow.b64), { format: "twos" });
   return <FlowContainer copyText={hex}>{hex}</FlowContainer>;
 }
 
