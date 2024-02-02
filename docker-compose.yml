@@ -15,7 +15,7 @@ services:
     image: tulip-frontend:latest
     restart: unless-stopped
     ports:
-      - "140.112.30.186:3000:3000"
+      - "${HOST_IP}:3000:3000"
     depends_on:
       - mongo
     networks:
