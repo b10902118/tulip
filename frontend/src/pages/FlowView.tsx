@@ -73,7 +73,7 @@ function hex_highlight(hex:string): React.ReactNode {
   };
   
   for (let i = 0; i < lines.length; i++) {
-    const line = lines[i].split(' ').filter((x) => x !== '');
+    const line = lines[i].substring(0,58).split(' ').filter((x) => x !== '')+lines[i].substring(58);
     console.log(line)
     const hexString = line.slice(1,-1);
     console.log(hexString)
