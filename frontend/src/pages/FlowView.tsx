@@ -77,6 +77,7 @@ function hex_highlight(hex:string) {
     }
     result += ' ' +line[-1];
   }
+  return result;
 }
 
 function HexFlow({ flow }: { flow: FlowData }) {
